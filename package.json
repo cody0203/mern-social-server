@@ -8,8 +8,7 @@
   },
   "scripts": {
     "development": "nodemon",
-    "build": "webpack --mode=production --config webpack.config.server.js",
-    "heroku-postbuild": "webpack -p"
+    "build": "webpack --mode=production --config webpack.config.server.js"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
