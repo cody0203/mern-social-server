@@ -47,7 +47,7 @@ const userInfo = async (req, res, next) => {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  const user = await User.findById(authId).select('name email updated created followers following');
+  const user = await User.findById(authId).select('name email updated created');
 
   if (!user) {
     return res.status(401).json({ message: 'User not found!' });

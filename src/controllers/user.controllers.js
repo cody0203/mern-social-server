@@ -88,7 +88,7 @@ const avatar = async (req, res, next) => {
   }
 
   res.set('Content-Type', 'image/png');
-  return res.sendFile(path.join(CURRENT_WORKING_DIR, '/src/assets/images/quack-default.png'));
+  return res.sendFile(path.join(CURRENT_WORKING_DIR, '/src/assets/images/user-default.png'));
 };
 
 const addFollowing = async (req, res, next) => {
