@@ -48,9 +48,7 @@ const userInfo = async (req, res, next) => {
     return res.status(401).json({ message: 'User not found!' });
   }
 
-  return res.json({
-    user,
-  });
+  return res.json(user);
 };
 
 const signOut = (req, res, next) => {
