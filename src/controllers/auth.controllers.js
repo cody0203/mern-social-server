@@ -11,15 +11,15 @@ const signIn = async (req, res, next) => {
     const user = await User.findOne({ email });
 
     const id = get(user, '_id');
-    const userName = get(user, 'name');
-    const userEmail = get(user, 'email');
 
     if (!user) {
       return res.status(401).json({ message: 'User not found!' });
     }
 
     if (!user.authenticate(password)) {
-      return res.status(401).json({ message: "Email and password don't match" });
+      return res
+        .status(401)
+        .json({ message: "Email and password don't match" });
     }
 
     const token = jwt.sign({ _id: id }, config.jwtSecret, {
@@ -28,11 +28,6 @@ const signIn = async (req, res, next) => {
 
     return res.json({
       token,
-      user: {
-        _id: id,
-        name: userName,
-        email: userEmail,
-      },
     });
   } catch (err) {
     return res.status(401).json({ message: 'Could not sign in' });
@@ -74,7 +69,8 @@ const hasAuthorization = (req, res, next) => {
   const auth = get(req, 'auth');
   const authId = get(auth, '_id');
 
-  const authorized = profile && auth && profileId.toString() === authId.toString();
+  const authorized =
+    profile && auth && profileId.toString() === authId.toString();
 
   if (!authorized) {
     return res.status(403).json({ error: 'User is not authorized' });
