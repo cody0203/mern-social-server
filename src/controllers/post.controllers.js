@@ -62,15 +62,21 @@ const getPosts = async (req, res, next) => {
     const page = parseInt(get(req, 'query.page')) || 1;
     const limit = parseInt(get(req, 'query.limit')) || 10;
 
+    const profileId = get(req, 'query.userId');
     const userId = get(req, 'auth._id');
-    const user = await User.findById(userId);
-    const following = get(user, 'following');
-    following.push(userId);
-
-    const query = {
-      owner: { $in: following },
-      $or: [{ owner: userId }, { public: true }],
-    };
+    let query;
+    
+    if (profileId) {
+      query = { owner: userId };
+    } else {
+      const user = await User.findById(userId);
+      const following = get(user, 'following');
+      following.push(userId);  
+      query = {
+        owner: { $in: following },
+        $or: [{ owner: userId }, { public: true }],
+      };
+    }
 
     const { data, meta } = await queryPost({ query, page, limit });
 
