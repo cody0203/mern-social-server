@@ -67,7 +67,7 @@ const getPosts = async (req, res, next) => {
     let query;
     
     if (profileId) {
-      query = { owner: userId };
+      query = { owner: profileId };
     } else {
       const user = await User.findById(userId);
       const following = get(user, 'following');
